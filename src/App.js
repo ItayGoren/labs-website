@@ -75,6 +75,7 @@ class DifferentialDiagnoses extends React.Component {
  
 class Indications extends React.Component {
     render() {
+        console.info(this.props.conditions);
         return <div>
             <h5 className="inline"> {this.props.type + " Differential diagnoses" } </h5>
             <AddButton/>
@@ -96,26 +97,18 @@ class Indications extends React.Component {
 
 class NumericDataSet extends React.Component {
     render() {
-        var dds = [
-            {'code': '1234:icd9'},
-            {'code': '2345:icd9'},
-            {'code': '3456:icd10'},
-        ]
-        var indications = [
-            {'code': '1234:icd9', 'timeout': 1, 'deviations': 0},
-            {'code': '2345:icd9', 'timeout': 6, 'deviations': 1},
-            {'code': '3456:icd10', 'timeout': 120, 'deviations': 2},
-        ]
+        console.info('rendering numeric data set');
         return <div id="data-sets" className="callout callout-primary">
             <h4> Numeric Data Set </h4>
             <h5 className="inline"> Ranges </h5> <AddButton />
             <div className="numeric-data-set">
-                <NumericLabTestUnit units="mg/dl" maleLow="50" maleHigh="150" femaleLow="70" femaleHigh="170" />
-                <NumericLabTestUnit units="%" maleLow="5" maleHigh="15" femaleLow="7" femaleHigh="17" />
-                <DifferentialDiagnoses type="High" conditions={dds} />
-                <DifferentialDiagnoses type="Low" conditions={dds} />
-                <Indications type="High" conditions={indications} />
-                <Indications type="Low" conditions={indications} />
+                {this.props.data.ranges.map((value, index) => {
+                    return <NumericLabTestUnit key={index} units={value.units} maleLow={value.male_low} maleHigh={value.male_high} femaleLow={value.female_low} femaleHigh={value.female_high}/>
+                })}
+                <DifferentialDiagnoses type="High" conditions={this.props.data.high_dds} />
+                <DifferentialDiagnoses type="Low" conditions={this.props.data.high_dds} />
+                <Indications type="High" conditions={this.props.data.high_indications} />
+                <Indications type="Low" conditions={this.props.data.high_indications} />
             </div>
         </div>
     }
@@ -124,25 +117,16 @@ class NumericDataSet extends React.Component {
 
 class BinaryDataSet extends React.Component {
     render() {
-        var dds = [
-            {'code': '1234:icd9'},
-            {'code': '2345:icd9'},
-            {'code': '3456:icd10'},
-        ]
-        var indications = [
-            {'code': '1234:icd9', 'timeout': 1, 'deviations': 0},
-            {'code': '2345:icd9', 'timeout': 6, 'deviations': 1},
-            {'code': '3456:icd10', 'timeout': 120, 'deviations': 2},
-        ]
+        console.info('rendering binary data set');
         return <div id="data-sets" className="callout callout-primary">
             <h4> Binary Data Set </h4>
             <div className="binary-data-set">
-                <h5> Is negative good: {this.props.isNegativeGood} </h5>
-                <h5> Is positive good: {this.props.isPositiveGood} </h5>
-                <DifferentialDiagnoses type="Positive" conditions={dds} />
-                <DifferentialDiagnoses type="Negative" conditions={dds} />
-                <Indications type="Positive" conditions={indications} />
-                <Indications type="Negative" conditions={indications} />
+                <h5> Is negative good: {this.props.data.is_negative_good} </h5>
+                <h5> Is positive good: {this.props.data.is_positive_good} </h5>
+                <DifferentialDiagnoses type="Positive" conditions={this.props.data.positive_dds} />
+                <DifferentialDiagnoses type="Negative" conditions={this.props.data.negative_dds} />
+                <Indications type="Positive" conditions={this.props.data.positive_indications} />
+                <Indications type="Negative" conditions={this.props.data.negative_indications} />
             </div>
         </div>
     }
@@ -171,19 +155,10 @@ class Explanation extends React.Component {
 
 class ExplanationsPanel extends React.Component {
     render() {
-        var explanations = [
-            {
-                'title': 'What does it mean?',
-                'body': 'Green vines attached to the trunk of the tree had wound themselves toward the top of the canopy. Ants used the vine as their private highway, avoiding all the creases and crags of the bark, to freely move at top speed from top to bottom or bottom to top depending on their current chore. At least this was the way it was supposed to be. Something had damaged the vine overnight halfway up the tree leaving a gap in the once pristine ant highway.',
-            }, {
-                'title': 'When to get tested?',
-                'body': 'He ordered his regular breakfast. Two eggs sunnyside up, hash browns, and two strips of bacon. He continued to look at the menu wondering if this would be the day he added something new. This was also part of the routine. A few seconds of hesitation to see if something else would be added to the order before demuring and saying that would be all. It was the same exact meal that he had ordered every day for the past two years.',
-            }
-        ];
         return <div className="callout callout-success">
             <h4 className="inline"> Explanations </h4>
             <AddButton/>
-            {explanations.map((value, index) => {
+            {this.props.explanations.map((value, index) => {
                 return <div key={index}>
                     <EditButton />
                     <div className="spacer-5"/>
@@ -197,17 +172,72 @@ class ExplanationsPanel extends React.Component {
 }
 
 
+class Page extends React.Component {
+    constructor() {
+        super();
+        var explanations = [
+            {
+                title: 'What does it mean?',
+                body: 'Green vines attached to the trunk of the tree had wound themselves toward the top of the canopy. Ants used the vine as their private highway, avoiding all the creases and crags of the bark, to freely move at top speed from top to bottom or bottom to top depending on their current chore. At least this was the way it was supposed to be. Something had damaged the vine overnight halfway up the tree leaving a gap in the once pristine ant highway.',
+            }, {
+                title: 'When to get tested?',
+                body: 'He ordered his regular breakfast. Two eggs sunnyside up, hash browns, and two strips of bacon. He continued to look at the menu wondering if this would be the day he added something new. This was also part of the routine. A few seconds of hesitation to see if something else would be added to the order before demuring and saying that would be all. It was the same exact meal that he had ordered every day for the past two years.',
+            }
+        ];
+        var dds = [
+            {code: '1234:icd9'},
+            {code: '2345:icd9'},
+            {code: '3456:icd10'},
+        ]
+        var indications = [
+            {code: '1234:icd9', timeout: 1, deviations: 0},
+            {code: '2345:icd9', timeout: 6, deviations: 1},
+            {code: '3456:icd10', timeout: 120, deviations: 2},
+        ]
+        var numericDataSet = {
+            ranges: [
+                {units: 'mg/dl', male_low: 50, male_high: 150, female_low: 70, female_high: 170},
+                {units: '%', male_low: 5, male_high: 15, female_low: 7, female_high: 17},
+            ],
+            high_dds: dds,
+            low_dds: dds,
+            high_indications: indications,
+            low_indications: indications,
+        }
+        var binaryDataSet = {
+            is_positive_good: 'True',
+            is_negative_good: 'Not Relevant',
+            positive_dds: dds,
+            negative_dds: dds,
+            positive_indications: indications,
+            negative_indications: indications,
+        }
+        this.state = {
+            lab_test_name: 'Trombotzitim',
+            lab_test_id: '1234',
+            numeric_data_set: numericDataSet,
+            binary_data_set: binaryDataSet,
+            explanations: explanations,
+        }
+    }
+
+    render() {
+        return <div>
+            <PageHeader labTestName={this.state.lab_test_name} labTestId={this.state.lab_test_id}/>
+            <NumericDataSet data={this.state.numeric_data_set}/>
+            <BinaryDataSet data={this.state.binary_data_set}/>
+            <ExplanationsPanel explanations={this.state.explanations}/>
+        </div>
+    }
+}
+
 function App() {
   return (
 <div className="row">
     <div className="col-1"></div>
     <div className="col-10">
-        <PageHeader labTestName="Trombotzitim" labTestId="1234"/>
-        <NumericDataSet/>
-        <BinaryDataSet isNegativeGood="True" isPositiveGood="Not Relevant"/>
-        <ExplanationsPanel/>
+        <Page/>
     </div>
-
     <div className="col-1"></div>
 </div>
   );
