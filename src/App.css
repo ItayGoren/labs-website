@@ -1,38 +1,82 @@
-.App {
-  text-align: center;
+.my-box {
+     padding: 5px;
+     margin: 5px 0;
+     border: 1px solid #eee;
+     border-radius: 3px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.hidden {
+    display: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.inline {
+    display: inline;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.spacer-5 {
+    display: inline;
+    margin-right: 5px;
 }
-
-.App-link {
-  color: #61dafb;
+.spacer-10 {
+    display: inline;
+    margin-right: 10px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.callout {
+     padding: 20px;
+     margin: 20px 0;
+     border: 1px solid #eee;
+     border-left-width: 5px;
+     border-radius: 3px;
+}
+.callout h4 {
+     margin-top: 0;
+     margin-bottom: 5px;
+}
+.callout p:last-child {
+     margin-bottom: 0;
+}
+.callout code {
+     border-radius: 3px;
+}
+.callout + .bs-callout {
+     margin-top: -5px;
+}
+.callout-default {
+     border-left-color: #777;
+}
+.callout-default h4 {
+     color: #777;
+}
+.callout-primary {
+     border-left-color: #428bca;
+}
+.callout-primary h4 {
+     color: #428bca;
+}
+.callout-success {
+     border-left-color: #5cb85c;
+}
+.callout-success h4 {
+     color: #5cb85c;
+}
+.callout-danger {
+     border-left-color: #d9534f;
+}
+.callout-danger h4 {
+     color: #d9534f;
+}
+.callout-warning {
+     border-left-color: #f0ad4e;
+}
+.callout-warning h4 {
+     color: #f0ad4e;
+}
+.callout-info {
+     border-left-color: #5bc0de;
+}
+.callout-info h4 {
+     color: #5bc0de;
+}
+.callout-bdc {
+     border-left-color: #29527a;
+}
+.callout-bdc h4 {
+     color: #29527a;
 }
