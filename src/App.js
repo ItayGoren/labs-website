@@ -269,8 +269,12 @@ class BinaryDataSet extends React.Component {
         return <div id="data-sets" className="callout callout-primary">
             <h4> Binary Data Set </h4>
             <div className="binary-data-set">
-                <h5> Is negative good: {this.props.data.is_negative_good} </h5>
-                <h5> Is positive good: {this.props.data.is_positive_good} </h5>
+                <h5 className="inline"> Is negative good: {this.props.data.is_negative_good} </h5>
+                <EditButton/>
+                <br/>
+                <h5 className="inline"> Is positive good: {this.props.data.is_positive_good} </h5>
+                <EditButton/>
+                <br/>
                 <DifferentialDiagnoses type="Positive" conditions={this.props.data.positive_dds} />
                 <DifferentialDiagnoses type="Negative" conditions={this.props.data.negative_dds} />
                 <Indications type="Positive" conditions={this.props.data.positive_indications} />
@@ -399,8 +403,8 @@ class Page extends React.Component {
             low_indications: indications,
         }
         var binaryDataSet = {
-            is_positive_good: 'True',
-            is_negative_good: 'Not Relevant',
+            is_negative_good: 'True',
+            is_positive_good: 'Not Relevant',
             positive_dds: dds,
             negative_dds: dds,
             positive_indications: indications,
