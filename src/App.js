@@ -112,6 +112,7 @@ class NumericLabTestUnit extends React.Component {
     render() {
         return <div className="my-box">
             <EditRangeButton units={this.props.units} maleLow={this.props.maleLow} maleHigh={this.props.maleHigh} femaleLow={this.props.femaleLow} femaleHigh={this.props.femaleHigh} />
+            <div className="spacer-5"/>
             <DeleteButton/>
             <br/>
             <label> Units: {this.props.units} </label><br/>
@@ -224,7 +225,7 @@ function EditIndication(props) {
 class Indications extends React.Component {
     render() {
         return <div>
-            <h5 className="inline"> {this.props.type + " Differential diagnoses" } </h5>
+            <h5 className="inline"> {this.props.type + " Indications" } </h5>
             <EditIndication type="add" code="" timeout={0} deviations={0}/>
             <ul>
                 {this.props.conditions.map((value, index) => {
